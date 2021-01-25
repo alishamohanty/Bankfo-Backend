@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "./node_modules/nodemon/bin/nodemon.js src/app.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -11,8 +11,12 @@
     "express": "~4.16.1",
     "fs": "^0.0.1-security",
     "morgan": "~1.9.1",
+    "nodemon": "^2.0.7",
     "path": "^0.12.7",
     "pg": "^8.5.1",
     "sequelize": "^6.4.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
   }
 }
