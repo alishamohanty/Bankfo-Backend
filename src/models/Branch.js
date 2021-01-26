@@ -2,8 +2,7 @@ module.exports = (sequelize, DataTypes) => {
     const Branch = sequelize.define('Branch', {
         ifsc: { 
             type: DataTypes.STRING(11),
-            allowNull: false,
-            range: []
+            allowNull: false
         },
         bank_id: DataTypes.BIGINT,
         branch: DataTypes.STRING(74),
