@@ -14,8 +14,8 @@ module.exports = {
             {
                 branches = await Branch.findAll({
                     where:{
-                        ifsc: {
-                            [Op.like]: 'q%'
+                        branch: {
+                            [Op.like]: q +'%'
                         }
                     },
                     limit: limit,
@@ -31,6 +31,29 @@ module.exports = {
     }
     ,
     async search(req, res) {
-        
+        try {
+            let branches = ''
+            const q = req.query.q
+            const limit = req.query.limit || 10
+            const offset = req.query.offset || 0
+
+            if(q)
+            {
+                branches = await Branch.findAll({
+                    where:{
+                        branch: {
+                            [Op.ilike]: q
+                        }
+                    },
+                    limit: limit,
+                    offset: offset,
+                    order: ['ifsc']
+                })
+            }
+            res.send(branches)
+        } catch (error) {
+            console.error(`Not able to perform autocomplete!!!`);
+            throw createError(500, `Not able to autocomplete`)
+        }
     }
 }
