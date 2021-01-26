@@ -14,9 +14,15 @@ module.exports = {
             {
                 branches = await Branch.findAll({
                     where:{
-                        branch: {
-                            [Op.like]: q +'%'
-                        }
+                        [Op.or]: [
+                            {ifsc: {[Op.ilike]: `${q}%`}},
+                            {bank_id: {[Op.like]: `${q}`}},
+                            {branch: {[Op.ilike]: `${q}`}},
+                            {address: {[Op.ilike]: `%${q}%`}},
+                            {city: {[Op.ilike]: `${q}`}},
+                            {district: {[Op.ilike]: `${q}`}},
+                            {state: {[Op.ilike]: `${q}`}}
+                        ]
                     },
                     limit: limit,
                     offset: offset,

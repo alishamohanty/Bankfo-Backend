@@ -21,4 +21,3 @@ sequelize.sync()
         app.listen(config.port)
         console.log(`Server has started on Port ${config.port}`);
     })
-
