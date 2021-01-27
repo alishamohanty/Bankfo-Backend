@@ -1,27 +1,29 @@
 const {Branch} = require('../models')
+const { Op } = require("sequelize");
 const createError = require('http-errors')
 
 module.exports = {
     async autocomplete(req, res) {
         try {
             let branches = ''
-            const q = req.query.q
-            const limit = req.query.limit || 10
-            const offset = req.query.offset || 0
+            const q = req.query.q.toUpperCase()
+            const limit = (req.query.limit)? req.query.limit : 10
+            const offset = (req.query.offset)? req.query.offset : 0
+            console.log(Op.or);
 
             if(q)
             {
                 branches = await Branch.findAll({
+                    attributes:['ifsc', 'bank_id','branch', 'address', 'city', 'district', 'state'],
                     where:{
-                        // [Op.or]: [
-                        //     {ifsc: {[Op.ilike]: `${q}%`}},
-                        //     {bank_id: {[Op.like]: `${q}`}},
-                        //     {branch: {[Op.ilike]: `${q}`}},
-                        //     {address: {[Op.ilike]: `%${q}%`}},
-                        //     {city: {[Op.ilike]: `${q}`}},
-                        //     {district: {[Op.ilike]: `${q}`}},
-                        //     {state: {[Op.ilike]: `${q}`}}
-                        // ]
+                        [Op.or]: [
+                            {ifsc: {[Op.like]: `${q}%`}},
+                            {branch: {[Op.like]: `${q}`}},
+                            {address: {[Op.like]: `%${q}%`}},
+                            {city: {[Op.like]: `${q}`}},
+                            {district: {[Op.like]: `${q}`}},
+                            {state: {[Op.like]: `${q}`}}
+                        ]
                     },
                     limit: limit,
                     offset: offset,
@@ -30,7 +32,7 @@ module.exports = {
             }
             res.send(branches)
         } catch (error) {
-            console.error(`Not able to perform autocomplete!!!`);
+            console.error(`Autocomplete Failed!!!`);
             throw createError(500, `Not able to autocomplete`)
         }
     }
@@ -55,7 +57,7 @@ module.exports = {
             }
             res.send(branches)
         } catch (error) {
-            console.error(`Not able to perform search!!!`);
+            console.error(`Search Failed`);
             throw createError(500, `Not able to search`)
         }
     }
