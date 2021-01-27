@@ -1,4 +1,4 @@
-const {Branch} = require('../models')
+const Branch = require('../models/Branch')
 const { Op } = require("sequelize");
 const createError = require('http-errors')
 
@@ -9,7 +9,6 @@ module.exports = {
             const q = req.query.q.toUpperCase()
             const limit = (req.query.limit)? req.query.limit : 10
             const offset = (req.query.offset)? req.query.offset : 0
-            console.log(Op.or);
 
             if(q)
             {
@@ -43,7 +42,6 @@ module.exports = {
             const q = req.query.q.toUpperCase()
             const limit = (req.query.limit)? req.query.limit : 10
             const offset = (req.query.offset)? req.query.offset : 0
-            console.log(q);
             if(q)
             {
                 branches = await Branch.findAll({
