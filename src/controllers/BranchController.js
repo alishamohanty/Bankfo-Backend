@@ -6,11 +6,11 @@ module.exports = {
     async autocomplete(req, res) {
         try {
             let branches = ''
-            const q = req.query.q.toUpperCase()
+            const q = (req.query.q)? req.query.q.toUpperCase() : req.query.q
             const limit = (req.query.limit)? req.query.limit : 10
             const offset = (req.query.offset)? req.query.offset : 0
 
-            if(q)
+            if(q && q!='')
             {
                 branches = await Branch.findAll({
                     attributes:['ifsc', 'bank_id','branch', 'address', 'city', 'district', 'state'],
@@ -34,10 +34,11 @@ module.exports = {
     async search(req, res) {
         try {
             let branches = ''
-            const q = req.query.q.toUpperCase()
+            const q = (req.query.q)? req.query.q.toUpperCase() : req.query.q
             const limit = (req.query.limit)? req.query.limit : 10
             const offset = (req.query.offset)? req.query.offset : 0
-            if(q)
+
+            if(q && q!='')
             {
                 branches = await Branch.findAll({
                     attributes:['ifsc', 'bank_id','branch', 'address', 'city', 'district', 'state'],

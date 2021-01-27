@@ -15,7 +15,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/api', indexRouter);
+
+app.use('/', indexRouter);
 
 sequelize.authenticate()
     .then(() => {
