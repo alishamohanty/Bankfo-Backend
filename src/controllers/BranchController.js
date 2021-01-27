@@ -1,4 +1,4 @@
-const Branch = require('../models')
+const {Branch} = require('../models')
 const Op = require('../models').Sequelize.Op
 const createError = require('http-errors')
 
@@ -39,27 +39,25 @@ module.exports = {
     async search(req, res) {
         try {
             let branches = ''
-            const q = req.query.q
-            const limit = req.query.limit || 10
-            const offset = req.query.offset || 0
-
+            const q = req.query.q.toUpperCase()
+            const limit = (req.query.limit)? req.query.limit : 10
+            const offset = (req.query.offset)? req.query.offset : 0
+            console.log(q);
             if(q)
             {
                 branches = await Branch.findAll({
-                    where:{
-                        branch: {
-                            [Op.ilike]: q
-                        }
+                    attributes:['ifsc', 'bank_id','branch', 'address', 'city', 'district', 'state'],
+                    where: {
+                        branch: q
                     },
                     limit: limit,
-                    offset: offset,
-                    order: ['ifsc']
+                    offset: offset
                 })
             }
             res.send(branches)
         } catch (error) {
-            console.error(`Not able to perform autocomplete!!!`);
-            throw createError(500, `Not able to autocomplete`)
+            console.error(`Not able to perform search!!!`);
+            throw createError(500, `Not able to search`)
         }
     }
 }
