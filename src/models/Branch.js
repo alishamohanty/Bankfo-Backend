@@ -11,5 +11,8 @@ module.exports = (sequelize, DataTypes) => {
         district: DataTypes.STRING(50),
         state: DataTypes.STRING(26)
     })
+    Branch.associate = function(models) {
+        Branch.belongsTo(models.Bank)
+    }
     return Branch
 }
