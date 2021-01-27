@@ -1,5 +1,4 @@
 const {Branch} = require('../models')
-const Op = require('../models').Sequelize.Op
 const createError = require('http-errors')
 
 module.exports = {
@@ -14,15 +13,15 @@ module.exports = {
             {
                 branches = await Branch.findAll({
                     where:{
-                        [Op.or]: [
-                            {ifsc: {[Op.ilike]: `${q}%`}},
-                            {bank_id: {[Op.like]: `${q}`}},
-                            {branch: {[Op.ilike]: `${q}`}},
-                            {address: {[Op.ilike]: `%${q}%`}},
-                            {city: {[Op.ilike]: `${q}`}},
-                            {district: {[Op.ilike]: `${q}`}},
-                            {state: {[Op.ilike]: `${q}`}}
-                        ]
+                        // [Op.or]: [
+                        //     {ifsc: {[Op.ilike]: `${q}%`}},
+                        //     {bank_id: {[Op.like]: `${q}`}},
+                        //     {branch: {[Op.ilike]: `${q}`}},
+                        //     {address: {[Op.ilike]: `%${q}%`}},
+                        //     {city: {[Op.ilike]: `${q}`}},
+                        //     {district: {[Op.ilike]: `${q}`}},
+                        //     {state: {[Op.ilike]: `${q}`}}
+                        // ]
                     },
                     limit: limit,
                     offset: offset,

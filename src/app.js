@@ -1,13 +1,13 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
 
 const config = require('./config/config')
-const {sequelize} = require('./models')
+const {sequelize} = require('./db')
 
-var indexRouter = require('./routes');
+const indexRouter = require('./routes');
 
-var app = express();
+const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
