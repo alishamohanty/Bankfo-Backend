@@ -15,23 +15,18 @@ module.exports = {
                 branches = await Branch.findAll({
                     attributes:['ifsc', 'bank_id','branch', 'address', 'city', 'district', 'state'],
                     where:{
-                        [Op.or]: [
-                            {ifsc: {[Op.like]: `${q}%`}},
-                            {branch: {[Op.like]: `${q}`}},
-                            {address: {[Op.like]: `%${q}%`}},
-                            {city: {[Op.like]: `${q}`}},
-                            {district: {[Op.like]: `${q}`}},
-                            {state: {[Op.like]: `${q}`}}
-                        ]
+                        branch: {
+                            [Op.like]: `${q}%`
+                        }
                     },
                     limit: limit,
                     offset: offset,
                     order: ['ifsc']
                 })
             }
-            res.send(branches)
+            res.send({branches: branches})
         } catch (error) {
-            console.error(`Autocomplete Failed!!!`);
+            console.error(`Autocomplete Failed!!!${error}`);
             throw createError(500, `Not able to autocomplete`)
         }
     }
@@ -47,15 +42,23 @@ module.exports = {
                 branches = await Branch.findAll({
                     attributes:['ifsc', 'bank_id','branch', 'address', 'city', 'district', 'state'],
                     where: {
-                        branch: q
+                        [Op.or]: [
+                            {ifsc: {[Op.eq]: `${q}`}},
+                            {branch: {[Op.eq]: `${q}`}},
+                            {address: {[Op.eq]: `${q}`}},
+                            {city: {[Op.eq]: `${q}`}},
+                            {district: {[Op.eq]: `${q}`}},
+                            {state: {[Op.eq]: `${q}`}}
+                        ]
                     },
                     limit: limit,
-                    offset: offset
+                    offset: offset,
+                    order:['ifsc']
                 })
             }
-            res.send(branches)
+            res.send({branches: branches})
         } catch (error) {
-            console.error(`Search Failed`);
+            console.error(`Search Failed ${error}`);
             throw createError(500, `Not able to search`)
         }
     }
