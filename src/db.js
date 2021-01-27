@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize')
 const config = require('./config/config')
-const DataTypes = require('sequelize').DataTypes;
 
 const sequelize = new Sequelize(
     config.db.database,
@@ -9,4 +8,4 @@ const sequelize = new Sequelize(
     config.db.options,
 )
 
-module.exports = {sequelize, DataTypes}
+module.exports = {sequelize}

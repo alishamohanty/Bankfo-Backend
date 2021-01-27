@@ -1,4 +1,5 @@
-const {sequelize, DataTypes} = require('../db');
+const {sequelize} = require('../db');
+const DataTypes = require('sequelize').DataTypes;
 
 const Bank = sequelize.define('banks', {
     name: DataTypes.STRING(49),
